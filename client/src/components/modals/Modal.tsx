@@ -7,14 +7,9 @@ import { IoMdClose } from 'react-icons/io';
 interface ModalProps {
   isOpen?: boolean;
   onClose: () => void;
-  onSubmit: () => void;
   title?: string;
   body?: React.ReactElement;
   footer?: React.ReactElement;
-  actionLabel: string;
-  disabled?: boolean;
-  secondaryAction?: () => void;
-  secondaryActionLabel?: string;
 }
 
 const Modal: React.FC<ModalProps> = ({ 
@@ -23,7 +18,6 @@ const Modal: React.FC<ModalProps> = ({
   title, 
   body, 
   footer, 
-  disabled,
 }) => {
   const [showModal, setShowModal] = useState(isOpen);
 
@@ -32,21 +26,12 @@ const Modal: React.FC<ModalProps> = ({
   }, [isOpen]);
 
   const handleClose = useCallback(() => {
-    if (disabled) {
-      return;
-    }
   
     setShowModal(false);
     setTimeout(() => {
       onClose();
     }, 300)
-  }, [onClose, disabled]);
-
-  const handleSubmit = useCallback(() => {
-    if (disabled) {
-      return;
-    }
-  }, [disabled]);
+  }, [onClose]);
 
   if (!isOpen) {
     return null;
